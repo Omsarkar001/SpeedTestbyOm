@@ -1,0 +1,227 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ethernet-port {
+    width: 180px;
+    height: 160px;
+    cursor: pointer;
+    perspective: 500px;
+}
+
+.housing {
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 4px;
+    position: relative;
+    transform: rotateX(10deg);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.opening {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 60%;
+    background: #000;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.pins {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 8px;
+}
+
+.pin {
+    width: 6px;
+    height: 40px;
+    background: #666;
+    border-radius: 1px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.male-connector {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background: #ddd;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.male-connector-body {
+    width: 100%;
+    height: 70%;
+    background: #bbb;
+    border-radius: 2px 2px 0 0;
+}
+
+.male-connector-clip {
+    width: 30%;
+    height: 20%;
+    background: #999;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}
+
+.leds {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
+}
+
+.led {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.green-led {
+    background: #33ff33;
+    box-shadow: 0 0 10px #33ff33;
+}
+
+.orange-led {
+    background: #ff9933;
+    box-shadow: 0 0 10px #ff9933;
+}
+
+.green-led .glow {
+    background: #33ff33;
+}
+
+.orange-led .glow {
+    background: #ff9933;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.3;
+        filter: brightness(0.5);
+    }
+}
+
+.blinking {
+    animation: blink 0.15s ease-in-out infinite;
+}
+
+.cable {
+    width: 40px;
+    height: 200px;
+    position: relative;
+    display: none;
+}
+
+.cable-body {
+    width: 100%;
+    height: 100%;
+    background: #333;
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+}
+
+.cable-body::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 20px;
+    background: #555;
+    border-radius: 5px 5px 0 0;
+}
+
+.status {
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.connected {
+    color: #33ff33;
+}
+
+.disconnected {
+    color: #ff3333;
+}
+
+.speed-results, .ping-result {
+    font-family: monospace;
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.speed-results div, .ping-result div {
+    margin: 5px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes plugIn {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+.plug-in {
+    animation: plugIn 0.5s ease-in-out forwards;
+}
+

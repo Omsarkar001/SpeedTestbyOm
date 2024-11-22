@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethernet Speed Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="ethernet-port" id="ethernetPort">
+            <div class="housing">
+                <div class="opening">
+                    <div class="pins">
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                        <div class="pin"></div>
+                    </div>
+                    <div class="male-connector" id="maleConnector">
+                        <div class="male-connector-body"></div>
+                        <div class="male-connector-clip"></div>
+                    </div>
+                </div>
+                <div class="leds">
+                    <div class="led green-led" id="greenLed">
+                        <div class="glow"></div>
+                    </div>
+                    <div class="led orange-led" id="orangeLed">
+                        <div class="glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cable" id="cable">
+            <div class="cable-body"></div>
+        </div>
+        <div class="status" id="status">Disconnected</div>
+        <div class="speed-results" id="speedResults"></div>
+        <div class="ping-result" id="pingResult"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
