@@ -63,32 +63,34 @@ function checkConnection() {
     updateStatus();
 }
 
-async function measureSpeed(type) {
-    const testDuration = 5000; // 5 seconds
-    const testSize = 5 * 1024 * 1024; // 5 MB
-    const startTime = Date.now();
-    let bytesTransferred = 0;
-
-    while (Date.now() - startTime < testDuration) {
-        if (type === 'download') {
-            await fetch('/api/speedtest-download');
-        } else {
-            await fetch('/api/speedtest-upload', {
-                method: 'POST',
-                body: new ArrayBuffer(testSize),
-            });
-        }
-        bytesTransferred += testSize;
-    }
-
-    const durationInSeconds = (Date.now() - startTime) / 1000;
-    return (bytesTransferred * 8) / (1000000 * durationInSeconds);
+async function simulateSpeedTest(type) {
+    return new Promise((resolve) => {
+        const testDuration = 3000; // 3 seconds
+        const startTime = performance.now();
+        
+        const simulateProgress = () => {
+            const elapsedTime = performance.now() - startTime;
+            if (elapsedTime < testDuration) {
+                requestAnimationFrame(simulateProgress);
+            } else {
+                // Generate a random speed between 10 and 100 Mbps
+                const speed = Math.random() * 90 + 10;
+                resolve(speed);
+            }
+        };
+        
+        simulateProgress();
+    });
 }
 
-async function measurePing() {
-    const startTime = Date.now();
-    await fetch('/api/ping');
-    return Date.now() - startTime;
+async function simulatePing() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // Generate a random ping between 10 and 100 ms
+            const ping = Math.random() * 90 + 10;
+            resolve(ping);
+        }, 1000);
+    });
 }
 
 async function startSpeedTest() {
@@ -104,19 +106,19 @@ async function startSpeedTest() {
 
     try {
         // Measure ping
-        pingTime = await measurePing();
+        pingTime = await simulatePing();
         updatePingResult();
 
         // Start download test
         isDownloading = true;
         updateLeds();
-        downloadSpeed = await measureSpeed('download');
+        downloadSpeed = await simulateSpeedTest('download');
         isDownloading = false;
 
         // Start upload test
         isUploading = true;
         updateLeds();
-        uploadSpeed = await measureSpeed('upload');
+        uploadSpeed = await simulateSpeedTest('upload');
         isUploading = false;
 
         testCompleted = true;
@@ -142,4 +144,3 @@ updateLeds();
 updateMaleConnector();
 updateSpeedResults();
 updatePingResult();
-
