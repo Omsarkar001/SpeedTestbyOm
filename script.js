@@ -8,6 +8,7 @@ const pingResult = document.getElementById('pingResult');
 const cable = document.getElementById('cable');
 
 let isConnected = false;
+let isTestingPing = false;
 let isDownloading = false;
 let isUploading = false;
 let downloadSpeed = null;
@@ -21,7 +22,7 @@ function updateStatus() {
 }
 
 function updateLeds() {
-    greenLed.classList.toggle('blinking', isDownloading);
+    greenLed.classList.toggle('blinking', isTestingPing || isDownloading);
     orangeLed.classList.toggle('blinking', isUploading);
 }
 
@@ -106,7 +107,10 @@ async function startSpeedTest() {
 
     try {
         // Measure ping
+        isTestingPing = true;
+        updateLeds();
         pingTime = await simulatePing();
+        isTestingPing = false;
         updatePingResult();
 
         // Start download test
@@ -127,6 +131,7 @@ async function startSpeedTest() {
     } catch (error) {
         console.error('Speed test failed:', error);
     } finally {
+        isTestingPing = false;
         isDownloading = false;
         isUploading = false;
         updateLeds();
